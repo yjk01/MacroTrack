@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -150,9 +151,10 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
                         contentDescription = "Calories Icon",
                         modifier = Modifier.size(24.dp)
                     )
-                    Text(text = "Calories")
+                    Text(text = "Calories",
+                        style = MaterialTheme.typography.bodyMedium.copy(fontStyle = FontStyle.Italic))
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "${nutritionData.calories}kcal")
+                    Text(text = "${nutritionData.calories} kcal")
                 }
 
                 // Column for Protein
@@ -165,9 +167,9 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
                         contentDescription = "Protein Icon",
                         modifier = Modifier.size(24.dp)
                     )
-                    Text(text = "Protein")
+                    Text(text = "Protein",style = MaterialTheme.typography.bodyMedium.copy(fontStyle = FontStyle.Italic))
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "${nutritionData.protein}g")
+                    Text(text = "${nutritionData.protein} g")
                 }
 
                 // Column for Sugar
@@ -180,9 +182,9 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
                         contentDescription = "Sugar Icon",
                         modifier = Modifier.size(24.dp)
                     )
-                    Text(text = "Sugar")
+                    Text(text = "Sugar",style = MaterialTheme.typography.bodyMedium.copy(fontStyle = FontStyle.Italic))
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "${nutritionData.sugar}g")
+                    Text(text = "${nutritionData.sugar} g")
                 }
 
                 // Column for Sodium
@@ -195,9 +197,9 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
                         contentDescription = "Sodium Icon",
                         modifier = Modifier.size(24.dp)
                     )
-                    Text(text = "Sodium")
+                    Text(text = "Sodium",style = MaterialTheme.typography.bodyMedium.copy(fontStyle = FontStyle.Italic))
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "${nutritionData.sodium}mg")
+                    Text(text = "${nutritionData.sodium} mg")
                 }
             }
 
@@ -279,7 +281,7 @@ fun MacroTopAppBar(modifier: Modifier = Modifier) {
         title = {
             Text(
                 text = stringResource(R.string.app_name),
-                style = MaterialTheme.typography.displayLarge,
+                style = MaterialTheme.typography.headlineLarge,
             )
         },
         modifier = modifier
@@ -298,7 +300,7 @@ fun WeeklyMacroSummary(totalCalories: Int, totalProtein: Int, totalSugar: Int, t
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(text = "Weekly Macro Summary", style = MaterialTheme.typography.titleSmall)
+            Text(text = "Weekly Macro Summary", style = MaterialTheme.typography.titleMedium)
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -312,7 +314,7 @@ fun WeeklyMacroSummary(totalCalories: Int, totalProtein: Int, totalSugar: Int, t
                         modifier = Modifier.size(40.dp)
                     )
                     Text(text = "Calories")
-                    Text(text = "$totalCalories")
+                    Text(text = "$totalCalories kcal")
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
