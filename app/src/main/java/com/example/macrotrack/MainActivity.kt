@@ -108,10 +108,45 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("Calories: ${nutritionData.calories}")
-                Text("Protein: ${nutritionData.protein}g")
-                Text("Sugar: ${nutritionData.sugar}g")
-                Text("Sodium: ${nutritionData.sodium}mg")
+                // Column for Calories
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.weight(1f) // Equal weight for each column
+                ) {
+                    Text(text = "Calories")
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "${nutritionData.calories}kcal")
+                }
+
+                // Column for Protein
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(text = "Protein")
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "${nutritionData.protein}g")
+                }
+
+                // Column for Sugar
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(text = "Sugar")
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "${nutritionData.sugar}g")
+                }
+
+                // Column for Sodium
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(text = "Sodium")
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "${nutritionData.sodium}mg")
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -141,7 +176,7 @@ fun AddDataDialog(onDismiss: () -> Unit, onSave: (Int, Int, Int, Int) -> Unit) {
                 TextField(
                     value = calories,
                     onValueChange = { calories = it },
-                    label = { Text("Calories") },
+                    label = { Text("Calories (kcal)") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
                 TextField(
