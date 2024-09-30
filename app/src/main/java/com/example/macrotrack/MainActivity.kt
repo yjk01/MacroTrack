@@ -132,7 +132,7 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
             modifier = Modifier
                 .padding(16.dp)
         ) {
-            Text(text = day, style = MaterialTheme.typography.bodyMedium)
+            Text(text = day, style = MaterialTheme.typography.titleMedium)
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -145,6 +145,11 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.weight(1f) // Equal weight for each column
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_calorie),
+                        contentDescription = "Calories Icon",
+                        modifier = Modifier.size(24.dp)
+                    )
                     Text(text = "Calories")
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(text = "${nutritionData.calories}kcal")
@@ -155,6 +160,11 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.weight(1f)
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_protein),
+                        contentDescription = "Protein Icon",
+                        modifier = Modifier.size(24.dp)
+                    )
                     Text(text = "Protein")
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(text = "${nutritionData.protein}g")
@@ -165,6 +175,11 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.weight(1f)
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_sugar),
+                        contentDescription = "Sugar Icon",
+                        modifier = Modifier.size(24.dp)
+                    )
                     Text(text = "Sugar")
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(text = "${nutritionData.sugar}g")
@@ -175,6 +190,11 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.weight(1f)
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_salt),
+                        contentDescription = "Sodium Icon",
+                        modifier = Modifier.size(24.dp)
+                    )
                     Text(text = "Sodium")
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(text = "${nutritionData.sodium}mg")
@@ -278,7 +298,7 @@ fun WeeklyMacroSummary(totalCalories: Int, totalProtein: Int, totalSugar: Int, t
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(text = "Weekly Macro Summary", style = MaterialTheme.typography.bodySmall)
+            Text(text = "Weekly Macro Summary", style = MaterialTheme.typography.titleSmall)
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -286,21 +306,41 @@ fun WeeklyMacroSummary(totalCalories: Int, totalProtein: Int, totalSugar: Int, t
             ) {
                 // Display totals in columns
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_calorie),
+                        contentDescription = "Calories Icon",
+                        modifier = Modifier.size(40.dp)
+                    )
                     Text(text = "Calories")
                     Text(text = "$totalCalories")
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_protein),
+                        contentDescription = "Protein Icon",
+                        modifier = Modifier.size(40.dp)
+                    )
                     Text(text = "Protein")
                     Text(text = "$totalProtein g")
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_sugar),
+                        contentDescription = "Sugar Icon",
+                        modifier = Modifier.size(40.dp)
+                    )
                     Text(text = "Sugar")
                     Text(text = "$totalSugar g")
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_salt),
+                        contentDescription = "Sodium Icon",
+                        modifier = Modifier.size(40.dp)
+                    )
                     Text(text = "Sodium")
                     Text(text = "$totalSodium mg")
                 }
