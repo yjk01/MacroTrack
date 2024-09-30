@@ -22,6 +22,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -60,41 +61,64 @@ fun MainScreen() {
     var selectedDay by remember { mutableStateOf("") }
     var nutritionDataList by remember { mutableStateOf(List(7) { NutritionData() }) }
 
+    // Compute total weekly macros
+    val totalCalories = nutritionDataList.sumOf { it.calories }
+    val totalProtein = nutritionDataList.sumOf { it.protein }
+    val totalSugar = nutritionDataList.sumOf { it.sugar }
+    val totalSodium = nutritionDataList.sumOf { it.sodium }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { MacroTopAppBar() }
-    ) {paddingValues ->
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues)
-    ) {
-        items(daysOfWeek.size) { index ->
-            val day = daysOfWeek[index]
-            DayCard(
-                day = day,
-                nutritionData = nutritionDataList[index],
-                onAddDataClick = {
-                    selectedDay = day
-                    showAddDataDialog = true
+        topBar = {
+            MacroTopAppBar()
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            WeeklyMacroSummary(
+                totalCalories = totalCalories,
+                totalProtein = totalProtein,
+                totalSugar = totalSugar,
+                totalSodium = totalSodium
+            )
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 8.dp)
+            ) {
+                items(daysOfWeek.size) { index ->
+                    val day = daysOfWeek[index]
+                    DayCard(
+                        day = day,
+                        nutritionData = nutritionDataList[index],
+                        onAddDataClick = {
+                            selectedDay = day
+                            showAddDataDialog = true
+                        }
+                    )
+                }
+            }
+        }
+
+        if (showAddDataDialog) {
+            AddDataDialog(
+                onDismiss = { showAddDataDialog = false },
+                onSave = { calories, protein, sugar, sodium ->
+                    val dayIndex = daysOfWeek.indexOf(selectedDay)
+                    nutritionDataList = nutritionDataList.toMutableList().apply {
+                        this[dayIndex] = NutritionData(calories, protein, sugar, sodium)
+                    }
+                    showAddDataDialog = false
                 }
             )
         }
     }
+}
 
-    if (showAddDataDialog) {
-        AddDataDialog(
-            onDismiss = { showAddDataDialog = false },
-            onSave = { calories, protein, sugar, sodium ->
-                val dayIndex = daysOfWeek.indexOf(selectedDay)
-                nutritionDataList = nutritionDataList.toMutableList().apply {
-                    this[dayIndex] = NutritionData(calories, protein, sugar, sodium)
-                }
-                showAddDataDialog = false
-            }
-        )
-    }
-}}
 
 @Composable
 fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Unit) {
@@ -102,7 +126,7 @@ fun DayCard(day: String, nutritionData: NutritionData, onAddDataClick: () -> Uni
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
-//        elevation = 4.dp
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
             modifier = Modifier
@@ -234,10 +258,54 @@ fun MacroTopAppBar(modifier: Modifier = Modifier) {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = stringResource(R.string.app_name), // Replace with your app name resource
+                text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.displayLarge,
             )
         },
         modifier = modifier
     )
 }
+
+@Composable
+fun WeeklyMacroSummary(totalCalories: Int, totalProtein: Int, totalSugar: Int, totalSodium: Int) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(text = "Weekly Macro Summary", style = MaterialTheme.typography.bodySmall)
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Display totals in columns
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "Calories")
+                    Text(text = "$totalCalories")
+                }
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "Protein")
+                    Text(text = "$totalProtein g")
+                }
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "Sugar")
+                    Text(text = "$totalSugar g")
+                }
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "Sodium")
+                    Text(text = "$totalSodium mg")
+                }
+            }
+        }
+    }
+}
+
