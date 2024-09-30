@@ -1,3 +1,9 @@
+/*
+* Author: Jun Kim
+* Date: 09/29
+* Assignment: CS315 Assignment 5 Something Cool
+* Description: Simple Macro tracking app utilizing android studio */
+
 package com.example.macrotrack
 
 import android.os.Bundle
